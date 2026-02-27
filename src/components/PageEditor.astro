@@ -39,8 +39,10 @@
 </div>
 
 <script is:inline>
+  console.log('PageEditor script loaded');
+  
   (function() {
-    // Wait for DOM to be ready
+    // Wait for DOM to be ready, then call initEditor
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initEditor);
     } else {
@@ -48,14 +50,24 @@
     }
     
     function initEditor() {
+      console.log('initEditor called');
       const urlParams = new URLSearchParams(window.location.search);
       const isEditMode = urlParams.has('edit');
+      console.log('isEditMode:', isEditMode);
       
-      if (!isEditMode) return;
+      if (!isEditMode) {
+        console.log('Not in edit mode, returning');
+        return;
+      }
       
       const editor = document.getElementById('page-editor');
-      if (!editor) return;
+      console.log('Editor element:', editor);
+      if (!editor) {
+        console.error('Editor element not found!');
+        return;
+      }
       
+      console.log('Showing editor');
       editor.style.display = 'block';
       
       // Get current page info
