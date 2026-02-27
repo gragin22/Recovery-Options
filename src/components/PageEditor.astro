@@ -38,10 +38,16 @@
   </div>
 </div>
 
-<script>
-  // Only run on client side
-  if (import.meta.env.SSR === false) {
-    (function() {
+<script is:inline>
+  (function() {
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initEditor);
+    } else {
+      initEditor();
+    }
+    
+    function initEditor() {
       const urlParams = new URLSearchParams(window.location.search);
       const isEditMode = urlParams.has('edit');
       
@@ -198,8 +204,8 @@
           }
         });
       }
-    })();
-  }
+    }
+  })();
 </script>
 
 <style>
